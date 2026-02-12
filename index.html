@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <title>Around The U.S.</title>
+    <link href="./pages/index.css" rel="stylesheet" />
+  </head>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img
+          alt="Logotipo Around The U.S."
+          class="logo header__logo"
+          src="./images/logo.svg"
+        />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__info">
+            <h1 class="profile__title">Jacques Cousteau</h1>
+            <button
+              aria-label="Editar perfil"
+              class="profile__edit-button"
+              type="button"
+            ></button>
+            <p class="profile__description">Explorador</p>
+          </div>
+          <button
+            aria-label="Adicionar cartão"
+            class="profile__add-button"
+            type="button"
+          ></button>
+        </section>
+        <section class="cards page__section">
+          <ul class="cards__list">
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
+                alt="Vale de Yosemite"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Vale de Yosemite</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg"
+                alt="Lago Louise"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Lago Louise</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg"
+                alt="Montanhas Carecas"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Montanhas Carecas</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg"
+                alt="Latemar"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Latemar</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg"
+                alt="Parque Nacional da Vanoise"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Parque Nacional da Vanoise</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+            <li class="card">
+              <img
+                class="card__image"
+                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg"
+                alt="Lago di Braies"
+              />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title">Lago di Braies</h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer class="footer page__section">
+        <p class="footer__copyright">© 2025 Around The U.S.</p>
+      </footer>
+      <div class="popup" id="edit-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Editar perfil</h3>
+          <form class="popup__form" id="edit-profile-form">
+            <input
+              class="popup__input popup__input_type_name"
+              name="name"
+              placeholder="Nome"
+              type="text"
+            />
+            <input
+              class="popup__input popup__input_type_description"
+              name="description"
+              placeholder="Sobre mim"
+              type="text"
+            />
+            <button class="button popup__button" type="submit">Salvar</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup" id="new-card-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Novo local</h3>
+          <form class="popup__form" id="new-card-form">
+            <input
+              class="popup__input popup__input_type_card-name"
+              name="place-name"
+              placeholder="Título"
+              required
+              type="text"
+            />
+            <input
+              class="popup__input popup__input_type_url"
+              name="link"
+              placeholder="Link de Imagem"
+              required
+              type="url"
+            />
+            <button class="button popup__button" type="submit">Criar</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup" id="image-popup">
+        <div class="popup__content popup__content_content_image">
+          <button
+            aria-label="Fechar pop-up"
+            class="popup__close"
+            type="button"
+          ></button>
+          <img alt="" class="popup__image" src="#" />
+          <p class="popup__caption"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
