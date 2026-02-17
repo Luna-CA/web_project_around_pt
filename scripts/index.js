@@ -1,3 +1,58 @@
+const editPopup = document.getElementById("edit-popup");
+const editCloseButton = editPopup.querySelector(".popup__close");
+const editForm = document.getElementById("edit-profile-form");
+const nameInput = editPopup.querySelector(".popup__input_type_name");
+const descriptionInput = editPopup.querySelector(
+  ".popup__input_type_description",
+);
+const editButton = document.querySelector(".profile__edit-button");
+
+function openModal(modal) {
+  modal.classList.add("popup_is-opened");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("popup_is-opened");
+}
+
+editButton.addEventListener("click", handleOpenEditModal);
+
+editCloseButton.addEventListener("click", function () {
+  closeModal(editPopup);
+});
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  const nameValue = nameInput.value;
+  const descriptionValue = descriptionInput.value;
+
+  const profileName = document.querySelector(".profile__title");
+  const profileDescription = document.querySelector(".profile__description");
+
+  profileName.textContent = nameValue;
+  profileDescription.textContent = descriptionValue;
+
+  closeModal(editPopup);
+}
+
+editForm.addEventListener("submit", handleProfileFormSubmit);
+
+function fillProfileForm() {
+  const currentName = document.querySelector(".profile__title").textContent;
+  const currentDescription = document.querySelector(
+    ".profile__description",
+  ).textContent;
+
+  nameInput.value = currentName;
+  descriptionInput.value = currentDescription;
+}
+
+function handleOpenEditModal() {
+  fillProfileForm();
+  openModal(editPopup);
+}
+
 const initialCards = [
   {
     name: "Vale de Yosemite",
@@ -48,15 +103,11 @@ function createCard(cardData) {
 }
 
 const cardsContainer = document.querySelector(".cards__list");
+
 initialCards.forEach(function (cardData) {
   const newCard = createCard(cardData);
   cardsContainer.appendChild(newCard);
 });
-
-function handleLikeClick(event) {
-  const button = event.target;
-  button.classList.toggle("card__like-button_active");
-}
 
 const likeButtons = document.querySelectorAll(".card__like-button");
 console.log("Botões encontrados:", likeButtons.length);
@@ -64,3 +115,8 @@ console.log("Botões encontrados:", likeButtons.length);
 likeButtons.forEach(function (button) {
   button.addEventListener("click", handleLikeClick);
 });
+
+function handleLikeClick(event) {
+  const button = event.target;
+  button.classList.toggle("card__like-button_active");
+}
