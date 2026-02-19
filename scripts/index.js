@@ -1,3 +1,8 @@
+const imageModal = document.getElementById("image-popup");
+const imageModalClose = imageModal.querySelector(".popup__close");
+const modalImage = imageModal.querySelector(".popup__image");
+const modalCaption = imageModal.querySelector(".popup__caption");
+
 const editPopup = document.getElementById("edit-popup");
 const editCloseButton = editPopup.querySelector(".popup__close");
 const editForm = document.getElementById("edit-profile-form");
@@ -62,58 +67,48 @@ const initialCards = [
     name: "Lago Louise",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
   },
-  {
-    name: "Montanhas Carecas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  },
-  {
-    name: "Parque Nacional Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  },
 ];
 
-console.log("Array initialCards:", initialCards);
+function getCardElement(cardData = {}) {
+  const name = cardData.name || "Lugar sem nome";
+  const link = cardData.link || "./images/placeholder.jpg";
 
-initialCards.forEach(function (cardData) {
-  console.log(cardData.name);
-  console.log(cardData.link);
+  const cardTemplate = document.querySelector("#card-template").content;
+  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+
+  const cardImage = cardElement.querySelector(".card__image");
+  const cardTitle = cardElement.querySelector(".card__title");
+
+  cardImage.src = link;
+  cardImage.alt = name;
+  cardTitle.textContent = name;
+
+  cardImage.addEventListener("click", function () {
+    modalImage.src = link;
+    modalImage.alt = name;
+    modalCaption.textContent = name;
+    openModal(imageModal);
+  });
+
+  const likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener("click", handleLikeClick);
+
+  return cardElement;
+}
+
+imageModalClose.addEventListener("click", function () {
+  closeModal(imageModal);
 });
 
-function createCard(cardData) {
-  const cardElement = document.createElement("li");
-  cardElement.classList.add("card");
-
-  cardElement.innerHTML = `
-    <img class="card__image" src="${cardData.link}" alt="${cardData.name}" />
-    <button aria-label="Excluir cartão" class="card__delete-button" type="button"></button>
-    <div class="card__description">
-      <h2 class="card__title">${cardData.name}</h2>
-      <button aria-label="Botão de curtir" class="card__like-button" type="button"></button>
-    </div>
-  `;
-  return cardElement;
+function renderCard(cardData, container) {
+  const cardElement = getCardElement(cardData);
+  container.prepend(cardElement);
 }
 
 const cardsContainer = document.querySelector(".cards__list");
 
-initialCards.forEach(function (cardData) {
-  const newCard = createCard(cardData);
-  cardsContainer.appendChild(newCard);
-});
-
-const likeButtons = document.querySelectorAll(".card__like-button");
-console.log("Botões encontrados:", likeButtons.length);
-
-likeButtons.forEach(function (button) {
-  button.addEventListener("click", handleLikeClick);
+initialCards.forEach((cardData) => {
+  renderCard(cardData, cardsContainer);
 });
 
 function handleLikeClick(event) {
