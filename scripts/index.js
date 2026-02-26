@@ -12,6 +12,11 @@ const descriptionInput = editPopup.querySelector(
 );
 const editButton = document.querySelector(".profile__edit-button");
 
+const addButton = document.querySelector(".profile__add-button");
+const addPopup = document.querySelector(".popup_type_new-card");
+const addForm = document.getElementById("add-card-form");
+const addPopupClose = addPopup.querySelector(".popup__close");
+
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
 }
@@ -67,6 +72,23 @@ const initialCards = [
     name: "Lago Louise",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
   },
+  // ADICIONE ESTES 4 NOVOS:
+  {
+    name: "Montanhas Carecas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
+  },
+  {
+    name: "Parque Nacional da Vanoise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
+  },
 ];
 
 function getCardElement(cardData = {}) {
@@ -93,6 +115,11 @@ function getCardElement(cardData = {}) {
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", handleLikeClick);
 
+  const deleteButton = cardElement.querySelector(".card__delete-button");
+  deleteButton.addEventListener("click", function () {
+    cardElement.remove();
+  });
+
   return cardElement;
 }
 
@@ -115,3 +142,30 @@ function handleLikeClick(event) {
   const button = event.target;
   button.classList.toggle("card__like-button_active");
 }
+
+addButton.addEventListener("click", function () {
+  openModal(addPopup);
+});
+
+addPopupClose.addEventListener("click", function () {
+  closeModal(addPopup);
+});
+
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+
+  const titleInput = addForm.querySelector(".popup__input_type_card-name");
+  const linkInput = addForm.querySelector(".popup__input_type_url");
+
+  const newCard = {
+    name: titleInput.value,
+    link: linkInput.value,
+  };
+
+  renderCard(newCard, cardsContainer);
+
+  addForm.reset();
+  closeModal(addPopup);
+}
+
+addForm.addEventListener("submit", handleAddCardSubmit);
