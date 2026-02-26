@@ -13,8 +13,8 @@ const descriptionInput = editPopup.querySelector(
 const editButton = document.querySelector(".profile__edit-button");
 
 const addButton = document.querySelector(".profile__add-button");
-const addPopup = document.querySelector(".popup_type_new-card");
-const addForm = document.getElementById("add-card-form");
+const addPopup = document.querySelector("#new-card-popup");
+const addForm = document.getElementById("new-card-form");
 const addPopupClose = addPopup.querySelector(".popup__close");
 
 function openModal(modal) {
