@@ -6,10 +6,8 @@ const modalCaption = imageModal.querySelector(".popup__caption");
 const editPopup = document.getElementById("edit-popup");
 const editCloseButton = editPopup.querySelector(".popup__close");
 const editForm = document.getElementById("edit-profile-form");
-const nameInput = editPopup.querySelector(".popup__input_type_name");
-const descriptionInput = editPopup.querySelector(
-  ".popup__input_type_description",
-);
+const nameInput = editPopup.querySelector("#profile-name");
+const descriptionInput = editPopup.querySelector("#profile-description");
 const editButton = document.querySelector(".profile__edit-button");
 
 const addButton = document.querySelector(".profile__add-button");
@@ -91,9 +89,9 @@ const initialCards = [
   },
 ];
 
-function getCardElement(cardData = {}) {
-  const name = cardData.name || "Lugar sem nome";
-  const link = cardData.link || "./images/placeholder.jpg";
+function getCardElement(cardData) {
+  const name = cardData.name;
+  const link = cardData.link;
 
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -154,8 +152,8 @@ addPopupClose.addEventListener("click", function () {
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
 
-  const titleInput = addForm.querySelector(".popup__input_type_card-name");
-  const linkInput = addForm.querySelector(".popup__input_type_url");
+  const titleInput = addForm.querySelector("#add-title");
+  const linkInput = addForm.querySelector("#add-url");
 
   const newCard = {
     name: titleInput.value,
@@ -169,3 +167,93 @@ function handleAddCardSubmit(evt) {
 }
 
 addForm.addEventListener("submit", handleAddCardSubmit);
+
+// Função para mostrar erro
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("form__input_type_error");
+  errorElement.textContent = errorMessage;
+}
+
+// Função para esconder erro
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("form__input_type_error");
+  errorElement.textContent = "";
+}
+
+// Função para verificar validade
+function checkInputValidity(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+// Função para controlar botão
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("form__submit_disabled");
+    buttonElement.disabled = true;
+  } else {
+    buttonElement.classList.remove("form__submit_disabled");
+    buttonElement.disabled = false;
+  }
+}
+
+// Função para verificar se há input inválido
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+function setEventListeners(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
+  const buttonElement = formElement.querySelector(".form__submit");
+
+  // Desabilita o botão inicialmente
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+}
+
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll(".popup__form"));
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
+}
+
+// Ativar a validação
+enableValidation();
+
+function closePopupOnOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.target);
+  }
+}
+
+// Adicionar event listeners para todos os pop-ups
+const popups = document.querySelectorAll(".popup");
+popups.forEach((popup) => {
+  popup.addEventListener("click", closePopupOnOverlay);
+});
+
+function closePopupOnEsc(evt) {
+  if (evt.key === "Escape") {
+    const openPopup = document.querySelector(".popup_is-opened");
+    if (openPopup) {
+      closeModal(openPopup);
+    }
+  }
+}
+
+// Adicionar event listener para o documento
+document.addEventListener("keydown", closePopupOnEsc);
