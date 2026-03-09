@@ -225,7 +225,7 @@ function setEventListeners(formElement) {
 }
 
 function enableValidation() {
-  const formList = Array.from(document.querySelectorAll(".popup__form"));
+  const formList = Array.from(document.querySelectorAll(".form"));
   formList.forEach((formElement) => {
     setEventListeners(formElement);
   });
