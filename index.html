@@ -68,9 +68,9 @@
           ></button>
           <h3 class="popup__title">Editar perfil</h3>
           <form class="popup__form" id="edit-profile-form" name="edit-form">
-            <label class="popup__form__field">
+            <label class="popup__field">
               <input
-                class="popup__form__input"
+                class="popup__input"
                 id="profile-name"
                 name="name"
                 placeholder="Nome"
@@ -79,11 +79,11 @@
                 minlength="2"
                 maxlength="40"
               />
-              <span class="popup__form__input-error profile-name-error"></span>
+              <span class="popup__input-error profile-name-error"></span>
             </label>
-            <label class="popup__form__field">
+            <label class="popup__field">
               <input
-                class="popup__form__input"
+                class="popup__input"
                 id="profile-description"
                 name="description"
                 placeholder="Sobre mim"
@@ -92,11 +92,9 @@
                 minlength="2"
                 maxlength="200"
               />
-              <span
-                class="popup__form__input-error profile-description-error"
-              ></span>
+              <span class="popup__input-error profile-description-error"></span>
             </label>
-            <button type="submit" class="popup__form__submit">Salvar</button>
+            <button type="submit" class="popup__submit">Salvar</button>
           </form>
         </div>
       </div>
@@ -109,29 +107,33 @@
           ></button>
           <h3 class="popup__title">Novo local</h3>
           <form class="popup__form" id="new-card-form" name="add-form">
-            <input
-              type="text"
-              class="popup__form__input"
-              id="add-title"
-              name="title"
-              placeholder="Título"
-              required
-              minlength="2"
-              maxlength="30"
-            />
-            <span class="popup__form__input-error add-title-error"></span>
+            <label class="popup__field">
+              <input
+                type="text"
+                class="popup__input"
+                id="add-title"
+                name="title"
+                placeholder="Título"
+                required
+                minlength="2"
+                maxlength="30"
+              />
+              <span class="popup__input-error add-title-error"></span>
+            </label>
 
-            <input
-              type="url"
-              class="popup__form__input popup__input_type_url"
-              id="add-url"
-              name="url"
-              placeholder="Link da imagem"
-              required
-            />
-            <span class="popup__form__input-error add-url-error"></span>
+            <label class="popup__field">
+              <input
+                type="url"
+                class="popup__input popup__input_type_url"
+                id="add-url"
+                name="url"
+                placeholder="Link da imagem"
+                required
+              />
+              <span class="popup__input-error add-url-error"></span>
+            </label>
 
-            <button type="submit" class="popup__form__submit">Salvar</button>
+            <button type="submit" class="popup__submit">Salvar</button>
           </form>
         </div>
       </div>
@@ -147,7 +149,7 @@
         </div>
       </div>
     </div>
-    <script src="./scripts/index.js"></script>
     <script src="./scripts/validate.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
