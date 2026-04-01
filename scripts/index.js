@@ -1,3 +1,5 @@
+import Card from "./Card.js";
+
 const imageModal = document.getElementById("image-popup");
 const imageModalClose = imageModal.querySelector(".popup__close");
 const modalImage = imageModal.querySelector(".popup__image");
@@ -89,57 +91,19 @@ const initialCards = [
   },
 ];
 
-function getCardElement(cardData) {
-  const name = cardData.name;
-  const link = cardData.link;
-
-  const cardTemplate = document.querySelector("#card-template").content;
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
-
-  cardImage.src = link;
-  cardImage.alt = name;
-  cardTitle.textContent = name;
-
-  cardImage.addEventListener("click", function () {
-    modalImage.src = link;
-    modalImage.alt = name;
-    modalCaption.textContent = name;
-    openModal(imageModal);
-  });
-
-  const likeButton = cardElement.querySelector(".card__like-button");
-  likeButton.addEventListener("click", handleLikeClick);
-
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", function () {
-    cardElement.remove();
-  });
-
-  return cardElement;
+function createCard(cardData) {
+  const card = new Card(cardData, "#card-template");
+  return card.generateCard();
 }
+
+initialCards.forEach((cardData) => {
+  const cardElement = createCard(cardData);
+  document.querySelector(".cards").appendChild(cardElement);
+});
 
 imageModalClose.addEventListener("click", function () {
   closeModal(imageModal);
 });
-
-function renderCard(cardData, container) {
-  const cardElement = getCardElement(cardData);
-  container.prepend(cardElement);
-}
-
-const cardsContainer = document.querySelector(".cards__list");
-
-initialCards.forEach((cardData) => {
-  renderCard(cardData, cardsContainer);
-});
-
-function handleLikeClick(event) {
-  const button = event.target;
-  button.classList.toggle("card__like-button_active");
-}
 
 addButton.addEventListener("click", function () {
   openModal(addPopup);
@@ -155,12 +119,14 @@ function handleAddCardSubmit(evt) {
   const titleInput = addForm.querySelector("#add-title");
   const linkInput = addForm.querySelector("#add-url");
 
-  const newCard = {
+  const cardData = {
     name: titleInput.value,
     link: linkInput.value,
   };
 
-  renderCard(newCard, cardsContainer);
+  const card = new Card(cardData, "#card-template");
+  const cardElement = card.generateCard();
+  document.querySelector(".cards").prepend(cardElement);
 
   addForm.reset();
   closeModal(addPopup);
@@ -189,5 +155,4 @@ function closePopupOnEsc(evt) {
   }
 }
 
-// Adicionar event listener para o documento
 document.addEventListener("keydown", closePopupOnEsc);

@@ -1,27 +1,34 @@
-// Função para mostrar erro
-function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+class FormValidator {
+  constructor(settings, formElement) {
+    this._formElement = this._formElement;
+    this._settings = settings;
+    }
+
+
+_showInputError(inputElement, errorMessage) {
+  const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add("popup__input_type_error");
   errorElement.textContent = errorMessage;
 }
 
-// Função para esconder erro
+_hideInputError() { 
 function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove("popup__input_type_error");
   errorElement.textContent = "";
 }
+}
 
-// Função para verificar validade
+ _checkInputValidity() { 
 function checkInputValidity(formElement, inputElement) {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
     hideInputError(formElement, inputElement);
   }
-}
+}}
 
-// Função para controlar botão
+ _toggleButtonState() {
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add("popup__submit_disabled");
@@ -30,16 +37,16 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.classList.remove("popup__submit_disabled");
     buttonElement.disabled = false;
   }
-}
+} }
 
-// Função para verificar se há input inválido
+ _hasInvalidInput() { 
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
-}
+}}
 
-function setEventListeners(formElement) {
+function _setEventListeners(formElement) {
   const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
   const buttonElement = formElement.querySelector(".popup__submit");
 
@@ -54,11 +61,9 @@ function setEventListeners(formElement) {
   });
 }
 
-function enableValidation() {
+function _enableValidation() {
   const formList = Array.from(document.querySelectorAll(".popup__form"));
   formList.forEach((formElement) => {
     setEventListeners(formElement);
   });
 }
-
-enableValidation();
