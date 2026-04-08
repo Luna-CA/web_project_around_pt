@@ -1,13 +1,28 @@
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleImageClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
+    this._handleImageClick = handleImageClick;
+  }
+  generateCard() {
+    this._element = this._getTemplate();
+
+    this._element.querySelector(".card__image").src = this._link;
+    this._element.querySelector(".card__image").alt = this._name;
+    this._element.querySelector(".card__title").textContent = this._name;
+
+    const cardImage = this._element.querySelector(".card__image");
+    cardImage.src = this._link;
+    cardImage.alt = this._name;
+
+    this._setEventListeners();
+    return this._element;
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector("#card-template")
+      .querySelector(this._templateSelector)
       .content.querySelector(".card")
       .cloneNode(true);
 
@@ -46,18 +61,6 @@ class Card {
 
   _handleImageClick() {
     openImagePopup(this._name, this._link);
-  }
-
-  generateCard() {
-    this._element = this._getTemplate();
-
-    this._element.querySelector(".card__image").src = this._link;
-    this._element.querySelector(".card__image").alt = this._name;
-    this._element.querySelector(".card__title").textContent = this._name;
-
-    this._setEventListeners();
-
-    return this._element;
   }
 }
 export default Card;

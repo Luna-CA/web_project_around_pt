@@ -1,4 +1,5 @@
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 const imageModal = document.getElementById("image-popup");
 const imageModalClose = imageModal.querySelector(".popup__close");
@@ -17,19 +18,26 @@ const addPopup = document.querySelector("#new-card-popup");
 const addForm = document.getElementById("new-card-form");
 const addPopupClose = addPopup.querySelector(".popup__close");
 
-function openModal(modal) {
-  modal.classList.add("popup_is-opened");
-}
-
-function closeModal(modal) {
-  modal.classList.remove("popup_is-opened");
-}
-
 editButton.addEventListener("click", handleOpenEditModal);
 
 editCloseButton.addEventListener("click", function () {
   closeModal(editPopup);
 });
+
+function openModal(popup) {
+  popup.classList.add("popup_is-opened");
+  // Adicionar listener apenas quando popup abre
+  document.addEventListener("keydown", closePopupOnEsc);
+
+  modalImage.src = imageUrl;
+  modalImage.alt = imageName;
+}
+
+function closeModal(popup) {
+  popup.classList.remove("popup_is-opened");
+  // Remover listener quando popup fecha
+  document.removeEventListener("keydown", closePopupOnEsc);
+}
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -154,5 +162,3 @@ function closePopupOnEsc(evt) {
     }
   }
 }
-
-document.addEventListener("keydown", closePopupOnEsc);
