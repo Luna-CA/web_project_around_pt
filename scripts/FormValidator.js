@@ -64,6 +64,6 @@ class FormValidator {
     });
     this._setEventListeners();
   }
-}
+
 
 export default FormValidator;
