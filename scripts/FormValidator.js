@@ -1,6 +1,6 @@
 class FormValidator {
   constructor(settings, formElement) {
-    this._formElement = formElement; 
+    this._formElement = formElement;
     this._settings = settings;
   }
   _showInputError(inputElement, errorMessage) {
@@ -63,6 +63,6 @@ class FormValidator {
     });
     this._setEventListeners();
   }
-
+}
 
 export default FormValidator;
