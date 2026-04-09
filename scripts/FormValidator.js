@@ -3,7 +3,6 @@ class FormValidator {
     this._formElement = formElement; 
     this._settings = settings;
   }
-}
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(
       `.${inputElement.id}-error`,
