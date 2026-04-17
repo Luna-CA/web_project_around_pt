@@ -1,5 +1,8 @@
-import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Card from "./Card.js";
+new Card(cardData, "#card-template", (name, link) =>
+  openImagePopup(name, link),
+);
 
 const imageModal = document.getElementById("image-popup");
 const imageModalClose = imageModal.querySelector(".popup__close");
@@ -11,6 +14,8 @@ const editCloseButton = editPopup.querySelector(".popup__close");
 const editForm = document.getElementById("edit-profile-form");
 const nameInput = editPopup.querySelector("#profile-name");
 const descriptionInput = editPopup.querySelector("#profile-description");
+const profileName = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
 const editButton = document.querySelector(".profile__edit-button");
 
 const addButton = document.querySelector(".profile__add-button");
@@ -20,22 +25,35 @@ const addPopupClose = addPopup.querySelector(".popup__close");
 
 editButton.addEventListener("click", handleOpenEditModal);
 
-editCloseButton.addEventListener("click", function () {
-  closeModal(editPopup);
-});
+const validationConfig = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
+
+const editFormValidator = new FormValidator(validationConfig, editForm);
+editFormValidator.enableValidation();
+
+const addFormValidator = new FormValidator(validationConfig, addForm);
+addFormValidator.enableValidation();
 
 function openModal(popup) {
   popup.classList.add("popup_is-opened");
-  // Adicionar listener apenas quando popup abre
-  document.addEventListener("keydown", closePopupOnEsc);
 
-  modalImage.src = imageUrl;
-  modalImage.alt = imageName;
+  document.addEventListener("keydown", closePopupOnEsc);
+}
+
+function openImagePopup(name, link) {
+  openModal(imageModal);
+  modalImage.src = link;
+  modalImage.alt = name;
 }
 
 function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
-  // Remover listener quando popup fecha
+
   document.removeEventListener("keydown", closePopupOnEsc);
 }
 
@@ -44,9 +62,6 @@ function handleProfileFormSubmit(evt) {
 
   const nameValue = nameInput.value;
   const descriptionValue = descriptionInput.value;
-
-  const profileName = document.querySelector(".profile__title");
-  const profileDescription = document.querySelector(".profile__description");
 
   profileName.textContent = nameValue;
   profileDescription.textContent = descriptionValue;
@@ -100,25 +115,29 @@ const initialCards = [
 ];
 
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template");
+  const card = new Card(cardData, "#card-template", (name, link) =>
+    openImagePopup(name, link),
+  );
   return card.generateCard();
 }
 
 initialCards.forEach((cardData) => {
   const cardElement = createCard(cardData);
-  document.querySelector(".cards").appendChild(cardElement);
+  document.querySelector(".cards__list").appendChild(cardElement);
 });
 
-imageModalClose.addEventListener("click", function () {
-  closeModal(imageModal);
+const closeButtons = document.querySelectorAll(".popup__close");
+
+closeButtons.forEach((button) => {
+  button.addEventListener("click", (evt) => {
+    // Encontra o popup pai do botão clicado
+    const popup = evt.target.closest(".popup");
+    closeModal(popup);
+  });
 });
 
 addButton.addEventListener("click", function () {
   openModal(addPopup);
-});
-
-addPopupClose.addEventListener("click", function () {
-  closeModal(addPopup);
 });
 
 function handleAddCardSubmit(evt) {
