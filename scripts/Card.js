@@ -5,27 +5,32 @@ class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
   }
-  generateCard() {
+
+  getView() {
+    // Use o método _getTemplate() que já funciona
     this._element = this._getTemplate();
 
-    this._element.querySelector(".card__title").textContent = this._name;
-
     const cardImage = this._element.querySelector(".card__image");
+    const cardTitle = this._element.querySelector(".card__title");
+
     cardImage.src = this._link;
     cardImage.alt = this._name;
+    cardTitle.textContent = this._name;
 
     this._setEventListeners();
+
     return this._element;
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector(this._templateSelector)
+      .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
 
     return cardElement;
   }
+
   _setEventListeners() {
     this._element
       .querySelector(".card__like-button")
@@ -55,4 +60,5 @@ class Card {
     this._element = null;
   }
 }
+
 export default Card;

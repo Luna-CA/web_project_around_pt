@@ -1,8 +1,51 @@
 import FormValidator from "./FormValidator.js";
 import Card from "./Card.js";
-new Card(cardData, "#card-template", (name, link) =>
-  openImagePopup(name, link),
-);
+
+const initialCards = [
+  {
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+  },
+  {
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+  },
+  {
+    name: "Bald Mountains",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+  },
+  {
+    name: "Vanoise National Park",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+  },
+];
+
+const cardsContainer = document.querySelector(".cards__list");
+
+initialCards.forEach((cardData) => {
+  const card = new Card(cardData, "#card-template", (name, link) =>
+    openImagePopup(name, link),
+  );
+  const cardElement = card.getView();
+  cardsContainer.append(cardElement);
+});
+
+initialCards.forEach((cardData) => {
+  const card = new Card(cardData, "#card-template", (name, link) =>
+    openImagePopup(name, link),
+  );
+
+  const cardElement = card.getView();
+  document.querySelector(".cards").append(cardElement);
+});
 
 const imageModal = document.getElementById("image-popup");
 const imageModalClose = imageModal.querySelector(".popup__close");
@@ -24,6 +67,12 @@ const addForm = document.getElementById("new-card-form");
 const addPopupClose = addPopup.querySelector(".popup__close");
 
 editButton.addEventListener("click", handleOpenEditModal);
+
+function createCard(cardData) {
+  return new Card(cardData, "#card-template", (name, link) =>
+    openImagePopup(name, link),
+  );
+}
 
 const validationConfig = {
   inputSelector: ".popup__input",
@@ -84,41 +133,6 @@ function fillProfileForm() {
 function handleOpenEditModal() {
   fillProfileForm();
   openModal(editPopup);
-}
-
-const initialCards = [
-  {
-    name: "Vale de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-  },
-  {
-    name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-  },
-
-  {
-    name: "Montanhas Carecas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  },
-  {
-    name: "Parque Nacional da Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  },
-];
-
-function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", (name, link) =>
-    openImagePopup(name, link),
-  );
-  return card.generateCard();
 }
 
 initialCards.forEach((cardData) => {
