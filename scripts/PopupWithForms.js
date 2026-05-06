@@ -1,7 +1,8 @@
-class PopupWithForm extends Popup {
+import Popup from "./Popup.js";
+export default class PopupWithForms extends Popup {
   constructor(popupSelector, handleFormSubmit) {
-    super(popupSelector); // Chama o construtor da classe pai
-    this._handleFormSubmit = handleFormSubmit; // Função que será executada ao enviar
+    super(popupSelector);
+    this._handleFormSubmit = handleFormSubmit;
     this._form = this._popup.querySelector(".popup__form");
   }
 
@@ -16,8 +17,7 @@ class PopupWithForm extends Popup {
     return formValues;
   }
   setEventListeners() {
-    super.setEventListeners(); // Chama o método da classe pai
-
+    super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit(this._getInputValues());
@@ -25,6 +25,6 @@ class PopupWithForm extends Popup {
   }
   close() {
     this._form.reset();
-    super.close(); // Chama o método da classe pai
+    super.close();
   }
 }
