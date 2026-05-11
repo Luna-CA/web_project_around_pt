@@ -44,7 +44,7 @@ const editProfilePopup = new PopupWithForms("#edit-popup", (formData) => {
   editProfilePopup.close();
 });
 
-const addCardPopup = new PopupWithForms("#add-popup", (formData) => {
+const addCardPopup = new PopupWithForms("#new-card-popup", (formData) => {
   const newCard = createCard({
     name: formData.title,
     link: formData.link,
@@ -75,7 +75,7 @@ const userInfo = new UserInfo({
 
 const validationConfig = {
   inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
+  submitButtonSelector: ".popup__submit",
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
