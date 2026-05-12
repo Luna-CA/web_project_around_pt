@@ -38,10 +38,10 @@ class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeIcon();
+      this._handleLikeClick();
     });
     this._deleteButton.addEventListener("click", () => {
-      this._handleDeleteCard();
+      this._handleDeleteClick();
     });
 
     this._cardImage.addEventListener("click", () => {
