@@ -5,6 +5,7 @@ class Api {
   }
   getUserInfo() {
     return fetch(this.URL + "/users/me", {
+      method: "GET",
       headers: {
         authorization: this.token,
       },
@@ -17,6 +18,7 @@ class Api {
   }
   getCards() {
     return fetch(this.URL + "/cards", {
+      method: "GET",
       headers: {
         authorization: this.token,
       },
@@ -35,20 +37,26 @@ class Api {
   }
 
   updateUserInfo(name, job) {
-     return fetch(this.URL + "/users/me", {
-        method: "PATCH",
-        headers: {
-            authorization: this.token,
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify({name, about}),
-     }).then((res) => res.json()); 
-    }
+    return fetch(this.URL + "/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: this.token,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ name, about }),
+    }).then((res) => res.json());
+  }
 
-  changeLikeStatus() {
-    "isLiked": false
-  };
-
+  changeLikeStatus(cardId, isLiked) {
+    return fetch(`${this.URL}/cardId/${cardId}/likes`, {
+      method: isLiked ? "PUT" : "DELETE",
+      headers: this.token,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        return result;
+      });
+  }
 }
 
 export default Api;
