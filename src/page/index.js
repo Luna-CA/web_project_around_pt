@@ -7,40 +7,13 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 
-const api = new Api({
-  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
-  headers: {
-    authorization: "166c673d-fa71-49aa-97f3-b5490e5739af",
-    "Content-Type": "application/json",
-  },
-});
+const api = new Api(
+  "https://around-api.pt-br.tripleten-services.com/v1",
+  "166c673d-fa71-49aa-97f3-b5490e5739af",
+);
 
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
+const initialCards = await api.getCards();
+console.log(initialCards);
 
 const cardsContainer = document.querySelector(".cards__list");
 const editForm = document.querySelector("#edit-profile-form");
@@ -54,11 +27,13 @@ const editProfilePopup = new PopupWithForms("#edit-popup", (formData) => {
   editProfilePopup.close();
 });
 
-const addCardPopup = new PopupWithForms("#new-card-popup", (formData) => {
-  const newCard = createCard({
+const addCardPopup = new PopupWithForms("#new-card-popup", async (formData) => {
+  const createAddCard = await api.addCard(formData.title, formData.link);
+  const newCard = createCard(
     name: formData.title,
     link: formData.link,
-  });
+    id: formData.id,
+  );
   cardSection.addItem(newCard);
   addCardPopup.close();
 });
@@ -72,7 +47,7 @@ function createCard(item) {
 
 const cardSection = new Section(
   {
-    items: initialCards, // ← usar initialCards
+    items: initialCards,
     renderer: createCard,
   },
   ".cards__list",

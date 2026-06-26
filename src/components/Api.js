@@ -8,6 +8,7 @@ class Api {
       method: "GET",
       headers: {
         authorization: this.token,
+        "Content-Type": "application/json",
       },
     }).then((res) => {
       if (res.ok) {
@@ -21,8 +22,14 @@ class Api {
       method: "GET",
       headers: {
         authorization: this.token,
+        "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro: ${res.status}`);
+    });
   }
 
   addCard(name, link) {
@@ -33,10 +40,15 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, link }),
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro: ${res.status}`);
+    });
   }
 
-  updateUserInfo(name, job) {
+  updateUserInfo(name, about) {
     return fetch(this.URL + "/users/me", {
       method: "PATCH",
       headers: {
@@ -44,19 +56,29 @@ class Api {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ name, about }),
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro: ${res.status}`);
+    });
   }
 
-  changeLikeStatus(cardId, isLiked) {
-    return fetch(`${this.URL}/cardId/${cardId}/likes`, {
+  changeLikeStatus(cardID, isLiked) {
+    return fetch(`${this.URL}/cards/${cardID}/likes`, {
       method: isLiked ? "PUT" : "DELETE",
-      headers: this.token,
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        return result;
-      });
+      headers: {
+        authorization: this.token,
+        "Content-type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro: ${res.status}`);
+    });
   }
+  deleteCard;
 }
 
 export default Api;
