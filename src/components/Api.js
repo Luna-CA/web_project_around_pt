@@ -53,7 +53,7 @@ class Api {
       method: "PATCH",
       headers: {
         authorization: this.token,
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ name, about }),
     }).then((res) => {
@@ -69,7 +69,7 @@ class Api {
       method: isLiked ? "PUT" : "DELETE",
       headers: {
         authorization: this.token,
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
     }).then((res) => {
       if (res.ok) {
@@ -78,7 +78,20 @@ class Api {
       return Promise.reject(`Erro: ${res.status}`);
     });
   }
-  deleteCard;
+  deleteCard(cardID) {
+    return fetch(`${this.URL}/cards/${cardID}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this.token,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro: ${res.status}`);
+    });
+  }
 }
 
 export default Api;

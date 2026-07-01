@@ -6,6 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 const api = new Api(
   "https://around-api.pt-br.tripleten-services.com/v1",
@@ -29,21 +30,28 @@ const editProfilePopup = new PopupWithForms("#edit-popup", (formData) => {
 
 const addCardPopup = new PopupWithForms("#new-card-popup", async (formData) => {
   const createAddCard = await api.addCard(formData.title, formData.link);
-  const newCard = createCard(
+  console.log(createAddCard);
+  const newCard = createCard({
     name: formData.title,
     link: formData.link,
-    id: formData.id,
-  );
+    id: createAddCard._id,
+  });
   cardSection.addItem(newCard);
   addCardPopup.close();
 });
 
+function popupConfirm()
+
 function createCard(item) {
   const card = new Card(item, "#card-template", () => {
     imagePopup.open(item.name, item.link);
-  });
+  }
+);
+
   return card.getView();
 }
+
+
 
 const cardSection = new Section(
   {
@@ -52,6 +60,8 @@ const cardSection = new Section(
   },
   ".cards__list",
 );
+
+const popupDelete = new PopupWithConfirmation("#popup__delete");
 
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",

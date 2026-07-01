@@ -29,20 +29,3 @@ export default class Popup {
     }
   };
 }
-
-class PopupWithConfirmation extends Popup {
-  constructor(popupSelector) {
-    super(popupSelector);
-  }
-
-  setAction(callback) {
-    this._handleSubmit = callback;
-  }
-  setEventListeners() {
-    this._popup.addEventListener("click", (evt) => {
-      if (evt.target === evt.currentTarget) {
-        this.close();
-      }
-    });
-  }
-}

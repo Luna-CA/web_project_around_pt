@@ -1,11 +1,19 @@
 class Card {
-  constructor(data, cardSelector, handleImageClick, isLiked, id) {
+  constructor(
+    data,
+    cardSelector,
+    handleImageClick,
+    handleDeleteClick,
+    isLiked,
+    id,
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleImageClick;
     this._isLiked = isLiked;
     this._id = id;
+    this._handleDeleteClick = handleDeleteClick;
   }
 
   getView() {
